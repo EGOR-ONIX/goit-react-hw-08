@@ -1,0 +1,16 @@
+.input {
+  width: 100%;
+  padding: 5px;
+  margin-bottom: 10px;
+
+  border: 2px solid #b6b5b5;
+  border-radius: 10px;
+}
+
+.input::placeholder {
+  font-size: 14px;
+}
+
+.input:focus-visible {
+  outline: 1px solid rgba(100, 100, 100, 0.5);
+}

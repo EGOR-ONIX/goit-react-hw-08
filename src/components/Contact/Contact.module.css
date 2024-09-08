@@ -1,0 +1,38 @@
+.information {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  width: 140px;
+}
+
+.information > li {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.icon {
+  flex-shrink: 0;
+}
+
+.btn {
+  padding: 0.75rem 1rem;
+
+  font-weight: 600;
+  text-transform: uppercase;
+  text-align: center;
+  color: #212121;
+
+  background-color: #e8e8e8;
+  border: 1px solid rgb(209, 213, 219);
+  border-radius: 10px;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  transition-property: background-color, color;
+  transition-duration: 300ms;
+}
+
+.btn:hover,
+.btn:focus {
+  background-color: #212121;
+  color: #e8e8e8;
+}
