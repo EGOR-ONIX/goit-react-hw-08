@@ -1,5 +1,4 @@
-.magnifying-glass-wrapper {
-  display: block;
-  margin-right: auto;
-  margin-left: auto;
+.mutating-dots-wrapper {
+  display: flex;
+  justify-content: center;
 }

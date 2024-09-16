@@ -1,50 +1,56 @@
-import { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import {
-  selectContacts,
-  selectIsLoading,
-  selectError,
-} from "../../redux/selectors";
-import { fetchContacts } from "../../redux/contactsOps.js";
+import { useDispatch } from "react-redux";
+import { lazy, useEffect } from "react";
+import { Routes, Route } from "react-router-dom";
 
-import ContactForm from "../ContactForm/ContactForm";
-import SearchBox from "../SearchBox/SearchBox";
-import ContactList from "../ContactList/ContactList";
-import Loader from "../Loader/Loader";
+import { useAuth } from "../../hook/useAuth.js";
+
+import { refreshUser } from "../../redux/auth/operations.js";
+
+const HomePage = lazy(() => import("../../pages/HomePage/HomePage"));
+const RegistrationPage = lazy(() =>
+  import("../../pages/RegistrationPage/RegistrationPage")
+);
+const LoginPage = lazy(() => import("../../pages/LoginPage/LoginPage"));
+const ContactsPage = lazy(() =>
+  import("../../pages/ContactsPage/ContactsPage")
+);
+
+import Layout from "../Layout/Layout.jsx";
+import { RestrictedRoute } from "../RestrictedRoute.jsx";
+import { PrivateRoute } from "../PrivateRoute.jsx";
 
 import css from "./App.module.css";
 
 function App() {
   const dispatch = useDispatch();
-
-  const contacts = useSelector(selectContacts);
-  const isLoading = useSelector(selectIsLoading);
-  const error = useSelector(selectError);
+  const { isRefreshing } = useAuth();
 
   useEffect(() => {
-    dispatch(fetchContacts());
+    dispatch(refreshUser());
   }, [dispatch]);
 
-  return (
-    <>
-      <h1 className={css.title}>Phonebook</h1>
-      <h2 className={css.subtitle}>New contact</h2>
-      <ContactForm />
-      <h2 className={css.subtitle}>Contacts</h2>
+  if (isRefreshing)
+    return <p className={css.refresh}>User is refreshing, please wait...</p>;
 
-      {!isLoading && error === null && contacts.length === 0 ? (
-        <p className={css["no-contacts"]}>The contact list is empty!</p>
-      ) : (
-        <>
-          <SearchBox />
-          <ContactList />
-        </>
-      )}
-      {isLoading && <Loader />}
-      {error !== null && (
-        <p className={css["error"]}>{error}. Please, try again later!</p>
-      )}
-    </>
+  return (
+    <Routes>
+      <Route path="/" element={<Layout />}>
+        <Route path="/" element={<HomePage />} />
+        <Route
+          path="/contacts"
+          element={<PrivateRoute component={<ContactsPage />} />}
+        />
+        <Route
+          path="/register"
+          element={<RestrictedRoute component={<RegistrationPage />} />}
+        />
+        <Route
+          path="/login"
+          element={<RestrictedRoute component={<LoginPage />} />}
+        />
+        <Route path="*" element={<HomePage />} />
+      </Route>
+    </Routes>
   );
 }
 

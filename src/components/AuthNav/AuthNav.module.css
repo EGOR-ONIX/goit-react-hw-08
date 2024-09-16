@@ -1,0 +1,46 @@
+.nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nav > li:first-child {
+  margin-right: 450px;
+}
+
+.link,
+.active {
+  position: relative;
+
+  display: block;
+  padding: 10px;
+
+  font-size: 16px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: rgba(0, 0, 0, 0.8);
+}
+
+.link:before {
+  content: "";
+
+  position: absolute;
+  bottom: 5px;
+  left: 10px;
+
+  width: calc(100% - 20px);
+  height: 4px;
+
+  background-color: rgba(0, 0, 0, 0.8);
+  border-radius: 5px;
+
+  transform-origin: right;
+  transform: scaleX(0);
+  transition: transform 0.3s ease-in-out;
+}
+
+.link:hover::before,
+.active::before {
+  transform-origin: left;
+  transform: scaleX(1);
+}

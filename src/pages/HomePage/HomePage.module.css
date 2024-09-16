@@ -1,0 +1,21 @@
+.container {
+  padding: 20px;
+}
+
+.title {
+  margin-bottom: 10px;
+
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.list {
+  padding-left: 20px;
+  margin-bottom: 10px;
+
+  list-style-type: disc;
+}
+
+.libraries {
+  font-weight: 700;
+}

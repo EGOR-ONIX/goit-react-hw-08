@@ -1,12 +1,12 @@
 import { useDispatch } from "react-redux";
-import { addContact } from "../../redux/contactsOps.js";
+import { addContact } from "../../redux/contacts/operations";
 
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { nanoid } from "nanoid";
 import * as Yup from "yup";
-import "yup-phone";
 
 import css from "./ContactForm.module.css";
+import toast from "react-hot-toast";
 
 function ContactForm() {
   const dispatch = useDispatch();
@@ -30,7 +30,11 @@ function ContactForm() {
   });
 
   const handleSubmit = (values, actions) => {
-    dispatch(addContact({ ...values }));
+    dispatch(addContact({ ...values }))
+      .unwrap()
+      .then((newContact) => {
+        toast.success(`Contact "${newContact.name}" successfully added!`);
+      });
 
     actions.resetForm();
   };
